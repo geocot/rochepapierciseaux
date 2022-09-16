@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roche, papier, ciseaux</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Roche, papier, ciseaux</h1>
+    <div id="bande">
+        <button id="rejouer">REJOUER</button>
+    </div>
+    <div id="containerChoix">
+        <img src="images/roche.png" alt="Roche" id="roche">
+        <img src="images/papier.png" alt="Papier" id="papier">
+        <img src="images/ciseaux.png" alt="Ciseaux" id="ciseaux">
+    </div>
+    <p id="message"></p>
+
+    <script>
+        const imgRoche = document.getElementById("roche");
+        const imgPapier = document.getElementById("papier");
+        const imgCiseaux = document.getElementById("ciseaux");
+        const message = document.getElementById("message");
+        const rejouer = document.getElementById("rejouer");
+
+        rejouer.addEventListener("click", function () { init(); })
+
+        let choixUsager;
+        let choixOrdi;
+        //Choix de l'ordinateur (0=roche, 1=papier, 2=ciseau)
+        const choixPossible = ["ROCHE", "PAPIER", "CISEAUX"];
+
+        function clickCiseau() {
+            imgCiseaux.style.borderColor = "red";
+            verification(2);
+        }
+
+        function clickPapier() {
+            imgPapier.style.borderColor = "red";
+            verification(1);
+        }
+
+        function clickRoche() {
+            imgRoche.style.borderColor = "red";
+            verification(0);
+        }
+
+        //Initialisation
+        function init() {
+            choixOrdi = (Math.random() * 2).toFixed(0);
+            imgCiseaux.style.borderColor = "rgba(0,0,0,0)";
+            imgRoche.style.borderColor = "rgba(0,0,0,0)";
+            imgPapier.style.borderColor = "rgba(0,0,0,0)";
+            imgCiseaux.addEventListener("click", clickCiseau);
+            imgPapier.addEventListener("click", clickPapier);
+            imgRoche.addEventListener("click", clickRoche);
+            message.innerHTML = "Le choix de l'ordinateur est fait... À vous de cliquer sur votre choix..."
+        }
+
+        function verification(choixUsager) {
+            let gagnant;
+            if (choixUsager == choixOrdi) {
+                gagnant = "Match nul";
+            } else if (choixUsager == 0 && choixOrdi == 2) {
+                gagnant = "Vous avez gagné";
+            } else if (choixUsager == 1 && choixOrdi == 0) {
+                gagnant = "Vous avez gagné";
+            } else if (choixUsager == 2 && choixOrdi == 1) {
+                gagnant = "Vous avez gagné";
+            } else {
+                gagnant = "L'ordinateur a gagné";
+            }
+
+            message.innerHTML = "Le choix de l'ordinateur est " + choixPossible[choixOrdi] + "<br>" + gagnant;
+            imgCiseaux.removeEventListener("click", clickCiseau);
+            imgRoche.removeEventListener("click", clickRoche);
+            imgPapier.removeEventListener("click", clickPapier);
+        }
+
+        init();
+
+    </script>
+
+</body>
+
+</html>
